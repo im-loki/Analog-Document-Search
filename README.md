@@ -31,3 +31,19 @@ The working procedure of a linter is as follows,
 pylint <program_name>
 
 This command will print all the inconsistencies with the standard styleguide. Fix all the issues before committing the code.
+
+#For Android app and development
+
+Install openJDK or Oracle JDK. Default settings
+
+Install android sdk, install pixel 2 emulator or use just anyother android phone except galaxy s series on debug mode.
+
+To edit: Import the zip file.
+
+To commit: Commit a newly created zip file.
+
+#Firebase Configuration
+
+Use the google credential given on signal app.
+
+Do not change the database schemas or storage links without updating the same in the app.
