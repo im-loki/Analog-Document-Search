@@ -32,7 +32,7 @@ pylint <program_name>
 
 This command will print all the inconsistencies with the standard styleguide. Fix all the issues before committing the code.
 
-#For Android app and development
+# For Android app and development
 
 Install openJDK or Oracle JDK. Default settings
 
@@ -42,7 +42,7 @@ To edit: Import the zip file.
 
 To commit: Commit a newly created zip file.
 
-#Firebase Configuration
+# Firebase Configuration
 
 Use the google credential given on signal app.
 
