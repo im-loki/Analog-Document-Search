@@ -1,5 +1,12 @@
 import pyrebase
 import re
+from crnn import t01
+from Dictionary_FYP import dict_using_spellchecker
+from Keyphrase_FYP import test
+
+import urllib.request
+import random
+
 
 config = {
   "apiKey": " AIzaSyB5OEATcLYrle-7-Q3JX2Sai7jp5ja0T5o ",
@@ -16,23 +23,36 @@ db = firebase.database()
 com_path = "Requests/Active"
 
 def some_rnd_func(path, data, key = ''):
-	print("Starting Some rnd func")
-	# print("Path: ", path)
-	# print("key: ", key)
-	# print("data received: ", data)
+	print("----------------------------------------------------------Starting Some rnd func")
+	print("#################### Data Received ####################")
+	print("Path: ", path)
+	print("key: ", key)
+	print("data received: ", data)
+	# Download The File
 
-	#commit any new data into db explicitly here. Do not change service variable here, though.
-	
+
+	url = data['document_path']
+	print("URL: ", url)
+
+	name = random.randrange(1,100)
+	fullname = "crnn/Images/" + str(name)+".jpg"
+	urllib.request.urlretrieve(url,fullname)
+
 	#process data.
+	data['document_json'] = str(t01.segment_process(fullname)).strip()
+
+	c_s = dict_using_spellchecker.spell_check_me(data['document_json'])
+
+	f_s = test.new(c_s)
+
+	data['keypharses'] = str(f_s) # can directly use list within it as well instead
 
 	#call fyp_modules
 
 	#commit the returned data using the path + key explicitly. Do not change service variable.
 
-	#return 1. if successful. Else -1. Service variable will be updated depending on the type.
-
-	print("Completed: some rnd func ")
-	return 1
+	print("----------------------------------------------------------Completed: some rnd func ")
+	return data
 
 
 def stream_handler(post):
@@ -48,7 +68,8 @@ def stream_handler(post):
 			# print(data[key])
 			if(data[key]['service'] == 1):#check only service
 				print("Initial Pendings")
-				if some_rnd_func(post['path'], data[key], key)==1:
+				data[key] = some_rnd_func(post['path'], data[key], key)
+				if data[key] != None:
 					data[key]['service'] = 5
 					db.child(com_path).child(key).update(data[key])
 	
@@ -64,7 +85,8 @@ def stream_handler(post):
 		data = data.val()
 		if(data['service'] == 1):#check changes only to service
 			print("PUT event, due to change made in web console @", path)
-			if some_rnd_func(path, data) == 1:
+			data = some_rnd_func(path, data)
+			if data != None:
 				data['service'] = 5
 				db.child(com_path + path).update(data)
 
@@ -79,10 +101,12 @@ def stream_handler(post):
 		if(data['service'] == 1):#check changes only to service
 			# print("Patch event @ ", post['path'])
 			print("NewEntry or changes to service: ", data)
-			if some_rnd_func(path, data) == 1:
+			data = some_rnd_func(path, data)
+			if data != None:
 				data['service'] = 5
 				db.child(com_path + path).update(data)
 
 print(db)
+
 #for listening to event changes.
 my_stream = db.child(com_path).stream(stream_handler, None)

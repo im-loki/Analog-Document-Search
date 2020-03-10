@@ -5,14 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 public class Final_view extends AppCompatActivity {
 
     TextView name, author, keyphrase, ocr;
+    String doc_ocr;
     ImageView image;
 
     @Override
@@ -34,7 +37,14 @@ public class Final_view extends AppCompatActivity {
         name.setText(document.getDocument_name());
         author.setText(document.getAuthor());
         keyphrase.setText(document.getKeypharses());
+        doc_ocr = document.getDocument_json();
 //        ocr.setText(document.getDocument_json());
         Picasso.get().load(document.getDocument_path()).into(image);
+    }
+    public void view_us(View view) {
+//        Toast.makeText(this, "Future Build", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, view_ocr_json.class);
+        i.putExtra("JSON_TEXT", doc_ocr);
+        startActivity(i);
     }
 }

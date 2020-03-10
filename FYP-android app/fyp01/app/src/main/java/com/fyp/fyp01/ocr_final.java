@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,12 +26,13 @@ public class ocr_final extends AppCompatActivity {
     private DatabaseReference mPostReference;
 
     private String doc_name, Uid;
+    private String doc_ocr;
     private String TAG = "ocr_final";
 
     private TextView tv;
     private int exit=0;
 
-    private TextView name,author,path,keyphrase;
+    private TextView name,author,path,keyphrase, view_ocr;
     private DatabaseReference databaseReference;
 
     int i=0;
@@ -53,6 +55,8 @@ public class ocr_final extends AppCompatActivity {
         author = findViewById(R.id.author);
         path = findViewById(R.id.path);
         keyphrase = findViewById(R.id.keyphrase);
+        view_ocr = findViewById(R.id.view_ocr);
+        view_ocr.setVisibility(View.INVISIBLE);
         tv = findViewById(R.id.process);
         tv.setText("Wait for Processing");
 
@@ -122,7 +126,9 @@ public class ocr_final extends AppCompatActivity {
         name.setText(em.getDocument_name());
         path.setText(em.getDocument_path());
         author.setText(em.getAuthor());
-//        keyphrase.setText(em.getKeypharses());
+        keyphrase.setText(em.getKeypharses());
+        view_ocr.setVisibility(View.VISIBLE);
+        doc_ocr = em.getDocument_json();
     }
 
     @Override
@@ -138,5 +144,9 @@ public class ocr_final extends AppCompatActivity {
 
     public void view_ocr(View view) {
         Toast.makeText(this, "Future Build", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "view_ocr: " +doc_ocr);
+        Intent i = new Intent(this, view_ocr_json.class);
+        i.putExtra("JSON_TEXT", doc_ocr);
+        startActivity(i);
     }
 }

@@ -13,9 +13,6 @@ print(firebase)
 
 db = firebase.database()
 
-# database path always changes, with respect to this
-# db.child("loki").child("loki01")
-
 data = {
         "author" : "Lokeshwar1",
         "document_json" : "",

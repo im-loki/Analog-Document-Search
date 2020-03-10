@@ -7,7 +7,7 @@
     tools:context=".ocr_final"
     android:layout_centerHorizontal="true"
     android:padding="10dp"
-    android:paddingLeft="20dp">
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="20dp">
+                android:paddingLeft="5dp">
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
@@ -64,7 +64,8 @@
                     android:textSize="24dp"
                     android:layout_below="@+id/process"
                     android:layout_marginTop="40dp"
-                    android:layout_toEndOf="@id/textView6" />
+                    android:layout_toEndOf="@id/textView6"
+                    android:textIsSelectable="true"/>
 
                 <TextView
                     android:id="@+id/textView8"
@@ -86,12 +87,13 @@
                     android:layout_below="@id/textView6"
                     android:layout_marginTop="25dp"
                     android:layout_toEndOf="@id/textView8"
+                    android:textIsSelectable="true"
                     />
 
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:textSize="24dp"
                     android:layout_marginTop="25dp"
                     android:text="Path: "
@@ -99,15 +101,17 @@
 
                 <TextView
                     android:id="@+id/path"
-                    android:layout_width="wrap_content"
+                    android:autoLink="web"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxHeight="100dp"
                     android:textSize="24dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="25dp"
-                    android:maxHeight="50dp"
                     android:text="Temp"
                     android:layout_below="@id/textView8"
                     android:layout_toEndOf="@id/textView10"
+                    android:autoSizeTextType="uniform"
                     />
 
                 <TextView
@@ -121,23 +125,27 @@
 
                 <TextView
                     android:id="@+id/keyphrase"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxHeight="100dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="25dp"
                     android:textSize="24dp"
                     android:text="Temp"
                     android:layout_below="@id/textView10"
                     android:layout_toEndOf="@id/textView11"
+                    android:textIsSelectable="true"
+                    android:scrollbars="vertical"
                     />
 
                 <TextView
+                    android:id="@+id/view_ocr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="View OCR File"
                     android:textSize="16dp"
                     android:layout_marginTop="40dp"
-                    android:layout_below="@id/textView11"
+                    android:layout_below="@id/keyphrase"
                     android:onClick="view_ocr"
                     />
             </RelativeLayout>
