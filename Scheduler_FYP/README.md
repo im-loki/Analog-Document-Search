@@ -6,8 +6,10 @@
 ```
 fyp_key.json is the google keys to access our account.
 config is just example program to how to insert into reaaltime db using python wrapper.
+Install Modules for Dictionary_using_spellchecker, CRNN, Keyphrase, then run this.
 
 ## Usage
+Run StandcoreNLP
 Run ./listener.py
 
 ## Update
