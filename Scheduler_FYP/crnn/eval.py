@@ -1,3 +1,4 @@
+""" Module to call the neural network function after taking care of the conditions that were specified earlier"""
 import os
 import argparse
 import string
@@ -76,17 +77,20 @@ def predict_text(model, img):
 
 def evaluate(model, data, output_subdir):
     if len(data) == 1:
-        evaluate_one(model, data)
+        result = evaluate_one(model, data)
+        return result
     else:
-        evaluate_batch(model, data, output_subdir)
+        result = evaluate_batch(model, data, output_subdir)
+        return result
 
 def evaluate_one(model, data):
-	print("In predict")
-	img = load_image(data[0])
-	img = preprocess_image(img)
-	print("Precessing")
-	result = predict_text(model, img)
-	print('Detected result: {}'.format(result))
+    print("In predict")
+    img = load_image(data[0])
+    img = preprocess_image(img)
+    print("Precessing")
+    result = predict_text(model, img)
+    print('Detected result: {}'.format(result))
+    return result
 
 def evaluate_batch(model, data, output_subdir):
     for filepath in tqdm(data):        
@@ -98,10 +102,27 @@ def evaluate_batch(model, data, output_subdir):
         with open(os.path.join(output_subdir, output_file), 'w') as f:
             f.write(result)
 
+        return result
+
+def ocr_event_trigger(arg):
+    """Function to setup and apply the neural network"""
+    cfg = arg
+
+    set_gpus()
+    output_subdir = create_output_directory()
+    data = collect_data()
+    _, model = CRNN_STN(cfg)
+    model.load_weights(cfg.model_path)
+    result = evaluate(model, data, output_subdir)
+
+    print("\n\n--------------- API RESULT ---------------\n")
+    print(result)
+    print("\n-------------------------------------------\n\n")
+
 if __name__ == '__main__':
     set_gpus()
     output_subdir = create_output_directory()
     data = collect_data()
     _, model = CRNN_STN(cfg)    
     model.load_weights(cfg.model_path)
-    evaluate(model, data, output_subdir)
+    _ = evaluate(model, data, output_subdir)
