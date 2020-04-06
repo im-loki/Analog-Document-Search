@@ -2,13 +2,11 @@
 """ Module to call the neural network function after setting few parameters"""
 import subprocess
 import re
-import pytesseract
-from pytesseract import Output
-import cv2
 import string
-import eval
-from sys import exit
-#from eval import ocr_event_trigger
+import pytesseract
+import cv2
+from pytesseract import Output
+from crnn.eval import ocr_event_trigger
 
 # preprocessing.rotate_angle(img)
 # img = preprocessing.get_grayscale(img)
