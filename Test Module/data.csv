@@ -1,0 +1,3 @@
+Initial Text,Ocr Generated Text,Initial Keyphrases,Generated Keyphrases,Init_No_Char,Init_No_Words,Init_No_Keyphrases,Pred_No_Char,Pred_No_Words,Pred_No_Keyphrases,mis_no_char,mis_no_words,mis_no_keyphrases
+folder,folder,['folder'],['folder'],6,1,1,6,1,1,0,0,0
+using tensorflow backend,using tensorflow backenc,"['Tensorflow', 'Tensorflow Backend', 'Backend']","['tensorflow backend', 'backend', 'tensorflow']",22,3,3,22,3,3,1,1,0
