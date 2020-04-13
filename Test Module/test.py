@@ -3,6 +3,7 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 import csv
 import ast
+import re
 
 #### ----- Variables ----- ####
 my_stream = None
@@ -23,8 +24,7 @@ data_text = None
 data_keyphrase = None
 
 # [('natural text',['keyphrase_00',...,'keypharse_09']), ('natural text',['keyphrase_00',...,'keypharse_09']), ...]
-testcases = [('folder',['folder']), ('Using Tensorflow Backend',['Tensorflow', 'Tensorflow Backend', 'Backend'])]
-
+testcases = [("Waiting for the wave to crest [wavelength services]\nWavelength services have been hyped ad nauseam for years. But despite their\nquick turn-up time and impressive margins, such services have yet to\nlive up to the industry's expectations. The reasons for this lukewarm\nreception are many, not the least of which is the confusion that still\nsurrounds the technology, but most industry observers are still\nconvinced that wavelength services with ultimately flourish\n", ['wavelength services', 'fiber optic networks', 'Looking Glass Networks', 'PointEast Research', 'optical fibre networks', 'telecommunication'])]
 class res:
 	no_words = 0
 	no_char = 0
@@ -85,8 +85,12 @@ class myTest:
 def text_on_img(filename='tb.png', text="Hello", size=12, color=(0,0,0), bg='red'):
 	"Draw a text on an Image, saves it, show it"
 	fnt = ImageFont.truetype('arial.ttf', size)
+	text_height = text.count('\n') * 2 * size + 2
+	text_width = 0
+	# print(text)
+
 	# create image
-	image = Image.new(mode = "RGB", size = (int(size/1.2)*len(text),size+50), color = bg)
+	image = Image.new(mode = "RGB", size = (int(size)*50,text_height), color = bg)
 	draw = ImageDraw.Draw(image)
 	# draw text
 	draw.text((10,10), text, font=fnt, fill=(0,0,0))
@@ -154,8 +158,16 @@ def compare_values(mytest, data):
 
 	# Compare Keyphrases
 	for key in mytest.init_keyphrases:
-		if key.lower() not in mytest.final_keyphrases:
-			mytest.mis_no_keyphrases += 1
+		if key.lower() not in mytest.final_keyphrases and key.lower() in mytest.init_text.lower():
+			# Deep Search
+			f = 0
+			for i_word in key.lower().split(' '):
+				for f_key in mytest.final_keyphrases:
+					for f_word in f_key.lower().split(' '):
+						if i_word == f_word:
+							f = 1
+			if f == 0:
+				mytest.mis_no_keyphrases += 1
 
 def my_init():
 	global flag, data, data_text, data_keyphrase
@@ -169,9 +181,14 @@ def main_test():
 	global my_stream
 	global flag
 	global data_rec
+	global testcases
 
 	storage = firebase.storage()
 	db = firebase.database()
+
+	f = open('complied_set.txt', 'r')
+	testcases = ast.literal_eval(f.read())
+	print(str(testcases))
 
 	# name of csv file 
 	# filename = "data.csv"
@@ -188,9 +205,10 @@ def main_test():
 
 	for doc_text, keypharses in testcases:
 
-		text_on_img(filename='tb.png',text=doc_text, size=12, bg='white')
+		text_on_img(filename='tb.png',text=doc_text, size=14, bg='white')
+		text = re.sub('\n+', " ", doc_text)
 
-		mytest = myTest(doc_text, keypharses)
+		mytest = myTest(text, keypharses)
 
 		# as admin
 		storage.child("images/test_" + str(i) + ".png").put("tb.png")

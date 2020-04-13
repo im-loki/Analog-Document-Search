@@ -2,10 +2,11 @@
 """ Module to call the neural network function after setting few parameters"""
 import subprocess
 import re
-import string
 import pytesseract
-import cv2
 from pytesseract import Output
+import cv2
+import string
+from sys import exit
 from crnn.eval import ocr_event_trigger
 
 # preprocessing.rotate_angle(img)
@@ -38,7 +39,7 @@ def call_ocr_non_api_way(fname):
 def call_ocr(fname, **kwargs):
     """Function to call the OCR functions without creating a subprocess"""
     arg = {
-        "model_path": "./crnn/Model/prediction/prediction_model.hdf5",
+        "model_path": "./crnn/Model/prediction_model.hdf5",
         "data_path": "./"+fname,
         "gpus": [0],
         "characters": "0123456789" + string.ascii_lowercase+"-",
@@ -74,16 +75,24 @@ def call_ocr(fname, **kwargs):
 
 def segment_process(img_src):
     print("Image Source: ", img_src)
+    # return pytesseract.image_to_string(img_src)
     img = cv2.imread(img_src)
     d = pytesseract.image_to_data(img, output_type=Output.DICT)
-	# print(d)
-
     n_w = 0
     total_string = ""
     n_boxes = len(d['level'])
+
+    # Must be removed uses Tesseract #
+    print(d['text'])
+    for t_w in d['text']:
+        if t_w != "":
+            total_string += " " + t_w
+    return total_string
+    # Must be removed uses Tesseract #
+    
         # Loop to iterate over all the bounding boxes
     for i in range(n_boxes):
-        print(i, d['left'][i], d['top'][i], d['width'][i], d['height'][i])
+        # print(i, d['left'][i], d['top'][i], d['width'][i], d['height'][i])
         (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
         if(x, y != 0, 0):
             if(d['par_num'][i] != 0):
@@ -92,7 +101,7 @@ def segment_process(img_src):
 	                    # cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2) #draws borders
 	                    # You have to extract Windows here
                         n_w += 1
-                        print(w, h)
+                        # print(w, h)
                         crop_img = img[y:y+h, x:x+w]
                         h = "crnn/Images/Saved" + str(n_w) + ".png"
                         cv2.imwrite(h, crop_img)

@@ -4,8 +4,15 @@ from crnn import t01
 from Dictionary_FYP import dict_using_spellchecker
 from Keyphrase_FYP import test
 
+# from crnn.eval import ocr_event_trigger
+
+# from crnn.utils import pad_image, resize_image, create_result_subdir
+# from crnn.STN.spatial_transformer import SpatialTransformer
+
 import urllib.request
 import random
+
+# from crnn.models import CRNN, CRNN_STN
 
 
 config = {

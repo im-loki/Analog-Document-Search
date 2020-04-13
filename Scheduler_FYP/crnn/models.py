@@ -3,7 +3,7 @@ from keras.layers import Input, Conv2D, BatchNormalization, MaxPooling2D, Reshap
 from keras.models import Model
 import keras.backend as K
 
-from STN.spatial_transformer import SpatialTransformer
+from crnn.STN.spatial_transformer import SpatialTransformer
 
 
 

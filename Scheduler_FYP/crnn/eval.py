@@ -8,26 +8,28 @@ import cv2
 import keras.backend as K
 from keras.models import model_from_json, load_model
 
-from utils import pad_image, resize_image, create_result_subdir
-from STN.spatial_transformer import SpatialTransformer
+# from utils import pad_image, resize_image, create_result_subdir
+from crnn.utils import pad_image, resize_image, create_result_subdir
 
-from models import CRNN, CRNN_STN
+from crnn.STN.spatial_transformer import SpatialTransformer
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--model_path', type=str, default='')
-parser.add_argument('--data_path', type=str, default='')
-parser.add_argument('--gpus', type=int, nargs='*', default=[0])
-parser.add_argument('--characters', type=str, default='0123456789'+string.ascii_lowercase+'-')
-parser.add_argument('--label_len', type=int, default=16)
-parser.add_argument('--nb_channels', type=int, default=1)
-parser.add_argument('--width', type=int, default=200)
-parser.add_argument('--height', type=int, default=31)
-parser.add_argument('--model', type=str, default='CRNN_STN', choices=['CRNN_STN', 'CRNN'])
-parser.add_argument('--conv_filter_size', type=int, nargs=7, default=[64, 128, 256, 256, 512, 512, 512])
-parser.add_argument('--lstm_nb_units', type=int, nargs=2, default=[128, 128])
-parser.add_argument('--timesteps', type=int, default=50)
-parser.add_argument('--dropout_rate', type=float, default=0.25)
-cfg = parser.parse_args()
+from crnn.models import CRNN, CRNN_STN
+
+# parser = argparse.ArgumentParser()
+# parser.add_argument('--model_path', type=str, default='')
+# parser.add_argument('--data_path', type=str, default='')
+# parser.add_argument('--gpus', type=int, nargs='*', default=[0])
+# parser.add_argument('--characters', type=str, default='0123456789'+string.ascii_lowercase+'-')
+# parser.add_argument('--label_len', type=int, default=16)
+# parser.add_argument('--nb_channels', type=int, default=1)
+# parser.add_argument('--width', type=int, default=200)
+# parser.add_argument('--height', type=int, default=31)
+# parser.add_argument('--model', type=str, default='CRNN_STN', choices=['CRNN_STN', 'CRNN'])
+# parser.add_argument('--conv_filter_size', type=int, nargs=7, default=[64, 128, 256, 256, 512, 512, 512])
+# parser.add_argument('--lstm_nb_units', type=int, nargs=2, default=[128, 128])
+# parser.add_argument('--timesteps', type=int, default=50)
+# parser.add_argument('--dropout_rate', type=float, default=0.25)
+# cfg = parser.parse_args()
 
 def set_gpus():
     os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.gpus)[1:-1]
@@ -106,23 +108,28 @@ def evaluate_batch(model, data, output_subdir):
 
 def ocr_event_trigger(arg):
     """Function to setup and apply the neural network"""
+    global cfg
     cfg = arg
-
+    # print(cfg.data_path)
     set_gpus()
+
     output_subdir = create_output_directory()
+
     data = collect_data()
+
     _, model = CRNN_STN(cfg)
     model.load_weights(cfg.model_path)
     result = evaluate(model, data, output_subdir)
 
-    print("\n\n--------------- API RESULT ---------------\n")
-    print(result)
-    print("\n-------------------------------------------\n\n")
+    # print("\n\n--------------- API RESULT ---------------\n")
+    # print(result)
+    # print("\n-------------------------------------------\n\n")
+    return result
 
-if __name__ == '__main__':
-    set_gpus()
-    output_subdir = create_output_directory()
-    data = collect_data()
-    _, model = CRNN_STN(cfg)    
-    model.load_weights(cfg.model_path)
-    _ = evaluate(model, data, output_subdir)
+# if __name__ == '__main__':
+#     set_gpus()
+#     output_subdir = create_output_directory()
+#     data = collect_data()
+#     _, model = CRNN_STN(cfg)    
+#     model.load_weights(cfg.model_path)
+#     _ = evaluate(model, data, output_subdir)
