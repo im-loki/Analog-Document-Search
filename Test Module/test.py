@@ -216,7 +216,7 @@ def main_test():
 		# storage.child("images/test0.jpg").download("downloaded.jpg")
 		# # Fetch URL
 		url_not_string = storage.child("images/test_" + str(i) + ".png").get_url(None)
-
+		temp = " ".join(text.split(' ')[:3])
 		# print(url_not_string)
 		# To db -> Insert
 		
@@ -224,7 +224,7 @@ def main_test():
 		data = {
 		        "author" : "Lokeshwar",
 		        "document_json" : "",
-		        "document_name" : "Test Case: " + str(i),
+		        "document_name" : str(temp),
 		        "document_path" : str(url_not_string),
 		        "keypharses" : "",
 		        "service" : 1,

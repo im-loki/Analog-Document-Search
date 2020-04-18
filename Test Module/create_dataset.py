@@ -10,7 +10,7 @@ list_name = []
 for root, dirs, files in os.walk("./Inspec/text/"):
     for filename in files:
         list_name.append(str(filename).split('.')[0])
-
+list_name = list_name[850:]
 while i < number_of_instances:
 	file_text = open("Inspec/text/" + list_name[i] + ".txt", "r")
 	text = file_text.read()
