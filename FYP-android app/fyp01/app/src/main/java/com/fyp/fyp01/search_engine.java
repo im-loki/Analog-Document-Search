@@ -108,10 +108,16 @@ public class search_engine extends AppCompatActivity {
     }
 
     private boolean src_para(String para, String keypharses) {
-        String[] keywords = keypharses.split(",");
-        for(int i=0; i<keywords.length; i++)
-            if(para.trim().equalsIgnoreCase(keywords[i].trim()))
+        String temp = keypharses.substring(1, keypharses.length() - 1);
+        String[] keywords = temp.split(",");
+//        Log.i("Src-me", "src_para: " + para + " " + temp);
+        for(int i=0; i<keywords.length; i++){
+//            if( i == 0)
+//                Log.i("Src", "src_para: " + keywords[i]  + para);
+            if(keywords[i].trim().toLowerCase().contains(para.trim().toLowerCase()))
                 return true;
+        }
+
         return false;
     }
 }
