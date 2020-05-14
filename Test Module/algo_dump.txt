@@ -1,0 +1,166 @@
+python3 keyph_algo.py 
+Original words:  ['unsupervisied', 'keyphrase', 'extraction', 'unsupervisied', 'keyphrase', 'keyphrase', 'extraction'] 7
+Phrases:  ['unsupervisied_keyphrase_extraction', 'unsupervisied_keyphrase', 'keyphrase_extraction'] 3
+Stemmed:  ['unsupervisi', 'keyphras', 'extract', 'unsupervisi', 'keyphras', 'keyphras', 'extract'] 7
+
+unique_word_list:  {'extract', 'keyphras', 'unsupervisi'} 3
+Adj, word2idx, p_vec
+[[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]] {'extract': 0, 'keyphras': 1, 'unsupervisi': 2} [0. 0. 0.] {'extract': [], 'keyphras': [], 'unsupervisi': []}
+i, w: 0 unsupervisi
+unsupervisi :  ['keyphras']
+unsupervisi :  ['keyphras', 'extract']
+unsupervisi :  ['keyphras', 'extract', 'unsupervisi']
+i, w: 1 keyphras
+keyphras :  ['unsupervisi', 'extract']
+keyphras :  ['unsupervisi', 'extract', 'unsupervisi']
+keyphras :  ['unsupervisi', 'extract', 'unsupervisi', 'keyphras']
+i, w: 2 extract
+extract :  ['keyphras', 'unsupervisi']
+extract :  ['keyphras', 'unsupervisi', 'unsupervisi', 'keyphras']
+extract :  ['keyphras', 'unsupervisi', 'unsupervisi', 'keyphras', 'keyphras']
+i, w: 3 unsupervisi
+unsupervisi :  ['keyphras', 'extract', 'unsupervisi', 'extract', 'keyphras']
+unsupervisi :  ['keyphras', 'extract', 'unsupervisi', 'extract', 'keyphras', 'keyphras', 'keyphras']
+unsupervisi :  ['keyphras', 'extract', 'unsupervisi', 'extract', 'keyphras', 'keyphras', 'keyphras', 'unsupervisi', 'extract']
+i, w: 4 keyphras
+keyphras :  ['unsupervisi', 'extract', 'unsupervisi', 'keyphras', 'unsupervisi', 'keyphras']
+keyphras :  ['unsupervisi', 'extract', 'unsupervisi', 'keyphras', 'unsupervisi', 'keyphras', 'extract', 'extract']
+keyphras :  ['unsupervisi', 'extract', 'unsupervisi', 'keyphras', 'unsupervisi', 'keyphras', 'extract', 'extract', 'keyphras']
+i, w: 5 keyphras
+keyphras :  ['unsupervisi', 'extract', 'unsupervisi', 'keyphras', 'unsupervisi', 'keyphras', 'extract', 'extract', 'keyphras', 'keyphras', 'extract']
+keyphras :  ['unsupervisi', 'extract', 'unsupervisi', 'keyphras', 'unsupervisi', 'keyphras', 'extract', 'extract', 'keyphras', 'keyphras', 'extract', 'unsupervisi']
+keyphras :  ['unsupervisi', 'extract', 'unsupervisi', 'keyphras', 'unsupervisi', 'keyphras', 'extract', 'extract', 'keyphras', 'keyphras', 'extract', 'unsupervisi', 'extract']
+i, w: 6 extract
+extract :  ['keyphras', 'unsupervisi', 'unsupervisi', 'keyphras', 'keyphras', 'keyphras']
+extract :  ['keyphras', 'unsupervisi', 'unsupervisi', 'keyphras', 'keyphras', 'keyphras', 'keyphras']
+extract :  ['keyphras', 'unsupervisi', 'unsupervisi', 'keyphras', 'keyphras', 'keyphras', 'keyphras', 'unsupervisi']
+
+p_vec:  [0.47619048 0.86666667 1.25      ]
+co_occ_dict {'extract': ['keyphras', 'unsupervisi', 'unsupervisi', 'keyphras', 'keyphras', 'keyphras', 'keyphras', 'unsupervisi'], 'keyphras': ['unsupervisi', 'extract', 'unsupervisi', 'keyphras', 'unsupervisi', 'keyphras', 'extract', 'extract', 'keyphras', 'keyphras', 'extract', 'unsupervisi', 'extract'], 'unsupervisi': ['keyphras', 'extract', 'unsupervisi', 'extract', 'keyphras', 'keyphras', 'keyphras', 'unsupervisi', 'extract']}
+
+ Adj Matrix: 
+
+-->  Counter({'keyphras': 5, 'unsupervisi': 3})
+$$$::
+ [[0. 5. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+$$$::
+ [[0. 5. 3.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+-->  Counter({'extract': 5, 'unsupervisi': 4, 'keyphras': 4})
+$$$::
+ [[0. 5. 3.]
+ [5. 0. 0.]
+ [0. 0. 0.]]
+$$$::
+ [[0. 5. 3.]
+ [5. 0. 4.]
+ [0. 0. 0.]]
+$$$::
+ [[0. 5. 3.]
+ [5. 4. 4.]
+ [0. 0. 0.]]
+-->  Counter({'keyphras': 4, 'extract': 3, 'unsupervisi': 2})
+$$$::
+ [[0. 5. 3.]
+ [5. 4. 4.]
+ [0. 4. 0.]]
+$$$::
+ [[0. 5. 3.]
+ [5. 4. 4.]
+ [3. 4. 0.]]
+$$$::
+ [[0. 5. 3.]
+ [5. 4. 4.]
+ [3. 4. 2.]]
+Final Matrix: 
+ [[0. 5. 3.]
+ [5. 4. 4.]
+ [3. 4. 2.]] [ 8. 13.  9.]
+Final relative-weights Matrix:  [[0.         0.38461538 0.33333333]
+ [0.625      0.30769231 0.44444444]
+ [0.375      0.30769231 0.22222222]]
+After relative p_vec:  [0.18365473 0.33425161 0.48209366] 1.0
+s_vec:  [0.33333333 0.33333333 0.33333333]
+next_s_vec[ 0 ]= 0.23096701278519458
+next_s_vec[ 1 ]= 0.44032648748557834
+next_s_vec[ 2 ]= 0.328706499729227
+next_s_vec[ 0 ]= 0.2646346077625215
+next_s_vec[ 1 ]= 0.41217928970939843
+next_s_vec[ 2 ]= 0.32318610252808
+next_s_vec[ 0 ]= 0.2538685267184454
+next_s_vec[ 1 ]= 0.4206181413510025
+next_s_vec[ 2 ]= 0.32551333193055204
+next_s_vec[ 0 ]= 0.2572867637268497
+next_s_vec[ 1 ]= 0.4179849206238786
+next_s_vec[ 2 ]= 0.3247283156492718
+next_s_vec[ 0 ]= 0.2562034818248247
+next_s_vec[ 1 ]= 0.41881560883046876
+next_s_vec[ 2 ]= 0.32498090934470675
+next_s_vec[ 0 ]= 0.25654662118299343
+next_s_vec[ 1 ]= 0.4185527965205298
+next_s_vec[ 2 ]= 0.32490058229647706
+1.0000000000000002 3
+[('unsupervisied', 0.32490058229647706), ('keyphrase', 0.4185527965205298), ('extraction', 0.25654662118299343), ('unsupervisied', 0.32490058229647706), ('keyphrase', 0.4185527965205298), ('keyphrase', 0.4185527965205298), ('extraction', 0.25654662118299343), ('unsupervisied_keyphrase_extraction', 1.0000000000000002), ('unsupervisied_keyphrase', 0.7434533788170068), ('keyphrase_extraction', 0.6750994177035232)] 10
+Sort List:  [2 6 0 3 1 4 5 9 8 7]
+
+KEY->  unsupervisied keyphrase extraction Beta:  unsupervisied keyphrase extraction keyphrase:  unsupervisied keyphrase extraction 0 
+
+Beta:  unsupervisied keyphrase Beta:  keyphrase extraction Beta:  keyphrase Beta:  unsupervisied Beta:  extraction repeat_score:  1
+fin_core:  5.08746284125034
+N 0 fin_core:  5.08746284125034
+
+KEY->  unsupervisied keyphrase Beta:  unsupervisied keyphrase extraction keyphrase:  unsupervisied keyphrase 0 
+
+Beta:  unsupervisied keyphrase keyphrase:  unsupervisied keyphrase 1 
+
+Beta:  keyphrase extraction Beta:  keyphrase Beta:  unsupervisied Beta:  extraction repeat_score:  3
+fin_core:  9.047123912114026
+N 1 fin_core:  -4.523561956057014
+
+KEY->  keyphrase extraction Beta:  unsupervisied keyphrase extraction keyphrase:  keyphrase extraction 0 
+
+Beta:  unsupervisied keyphrase Beta:  keyphrase extraction keyphrase:  keyphrase extraction 1 
+
+Beta:  keyphrase Beta:  unsupervisied Beta:  extraction repeat_score:  3
+fin_core:  8.643856189774725
+N 1 fin_core:  -4.3219280948873635
+
+KEY->  keyphrase Beta:  unsupervisied keyphrase extraction keyphrase:  keyphrase 0 
+
+Beta:  unsupervisied keyphrase keyphrase:  keyphrase 1 
+
+Beta:  keyphrase extraction keyphrase:  keyphrase 2 
+
+Beta:  keyphrase keyphrase:  keyphrase 3 
+
+Beta:  unsupervisied Beta:  extraction repeat_score:  8
+fin_core:  9.509775004326938
+N 3 fin_core:  1.0566416671474386
+
+KEY->  unsupervisied Beta:  unsupervisied keyphrase extraction keyphrase:  unsupervisied 0 
+
+Beta:  unsupervisied keyphrase keyphrase:  unsupervisied 1 
+
+Beta:  keyphrase extraction Beta:  keyphrase Beta:  unsupervisied keyphrase:  unsupervisied 2 
+
+Beta:  extraction repeat_score:  5
+fin_core:  7.400879436282184
+N 2 fin_core:  -1.8502198590705463
+
+KEY->  extraction Beta:  unsupervisied keyphrase extraction keyphrase:  extraction 0 
+
+Beta:  unsupervisied keyphrase Beta:  keyphrase extraction keyphrase:  extraction 1 
+
+Beta:  keyphrase Beta:  unsupervisied Beta:  extraction keyphrase:  extraction 2 
+
+repeat_score:  5
+fin_core:  6.643856189774725
+N 2 fin_core:  -1.6609640474436809
+[(5.08746284125034, 'unsupervisied keyphrase extraction'), (1.0566416671474386, 'keyphrase'), (-1.6609640474436809, 'extraction'), (-1.8502198590705463, 'unsupervisied'), (-4.3219280948873635, 'keyphrase extraction'), (-4.523561956057014, 'unsupervisied keyphrase')]
+['unsupervisied_keyphrase_extraction', 'unsupervisied_keyphrase', 'keyphrase_extraction', 'keyphrase', 'unsupervisied', 'extraction'] ['unsupervisied keyphrase extraction', 'keyphrase', 'extraction', 'unsupervisied', 'keyphrase extraction', 'unsupervisied keyphrase'] 1
+

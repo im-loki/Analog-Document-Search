@@ -29,8 +29,12 @@ print(firebase)
 db = firebase.database()
 com_path = "Requests/Active"
 
+iter_db_hits = 0
+iter_proc_starts = 0
 def some_rnd_func(path, data, key = ''):
-	print("----------------------------------------------------------Starting Some rnd func")
+	global iter_proc_starts
+	iter_proc_starts += 1
+	print("----------------------------------------------------------Starting Some rnd func: ", str(iter_proc_starts))
 	print("#################### Data Received ####################")
 	print("Path: ", path)
 	print("key: ", key)
@@ -64,7 +68,9 @@ def some_rnd_func(path, data, key = ''):
 
 def stream_handler(post):
 	# print(post)
-
+	global iter_db_hits
+	iter_db_hits += 1
+	print(str(iter_db_hits))
 	#Initial Iterator through the whole Matching JSON. Pending Operations are done first.
 	if(post['path']=='/'):
 		data = post['data']

@@ -10,3 +10,4 @@ StandfordNLP & JavaServer
 stemming
 Pyrebase4
 urllib
+Pyspellchecker

@@ -86,7 +86,7 @@ def segment_process(img_src):
     print(d['text'])
     for t_w in d['text']:
         if t_w != "":
-            total_string += " " + t_w
+            total_string += " " + re.sub('[();\/:\.+=\-?,]', " ", t_w.strip().lower())
     return total_string
     # Must be removed uses Tesseract #
     
