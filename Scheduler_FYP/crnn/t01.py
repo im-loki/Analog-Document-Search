@@ -83,11 +83,11 @@ def segment_process(img_src):
     n_boxes = len(d['level'])
 
     # Must be removed uses Tesseract #
-    print(d['text'])
-    for t_w in d['text']:
-        if t_w != "":
-            total_string += " " + re.sub('[();\/:\.+=\-?,]', " ", t_w.strip().lower())
-    return total_string
+    # print(d['text'])
+    # for t_w in d['text']:
+    #     if t_w != "":
+    #         total_string += " " + re.sub('[();\/:\.+=\-?,]', " ", t_w.strip().lower())
+    # return total_string
     # Must be removed uses Tesseract #
     
         # Loop to iterate over all the bounding boxes

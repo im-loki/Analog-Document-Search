@@ -15,22 +15,8 @@ Current work: OCR, Intregration
 ## Environment Settings
 Ubuntu 16.0.4LTS or Equivalent
 
-## Styleguide
-
-Install "pylint" for checking the consistency of the coding style for all the python scripts. To install you can use the following command,
-
-pip install pylint
-
-or,
-
-conda install pylint
-
-depending on the python environment installed on your machine.
-
-The working procedure of a linter is as follows,
-
-pylint <program_name>
-
-This command will print all the inconsistencies with the standard styleguide. Fix all the issues before committing the code.
+## Run Command
+> python3 local_run.py
+Filename Example: ./p.png
 
 
