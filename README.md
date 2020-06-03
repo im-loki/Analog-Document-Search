@@ -17,6 +17,7 @@ Ubuntu 16.0.4LTS or Equivalent
 
 ## Run Command
 > python3 local_run.py
+
 Filename Example: ./p.png
 
 
