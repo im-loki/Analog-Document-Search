@@ -5,40 +5,16 @@ import string
 from tqdm import tqdm
 import numpy as np
 import cv2
-import keras.backend as K
-from keras.models import model_from_json, load_model
-
-# from utils import pad_image, resize_image, create_result_subdir
+import tensorflow as tf
+from tensorflow.python.keras import backend as K
+from tensorflow.keras.models import model_from_json, load_model
 from crnn.utils import pad_image, resize_image, create_result_subdir
-
 from crnn.STN.spatial_transformer import SpatialTransformer
-
 from crnn.models import CRNN, CRNN_STN
-
-# parser = argparse.ArgumentParser()
-# parser.add_argument('--model_path', type=str, default='')
-# parser.add_argument('--data_path', type=str, default='')
-# parser.add_argument('--gpus', type=int, nargs='*', default=[0])
-# parser.add_argument('--characters', type=str, default='0123456789'+string.ascii_lowercase+'-')
-# parser.add_argument('--label_len', type=int, default=16)
-# parser.add_argument('--nb_channels', type=int, default=1)
-# parser.add_argument('--width', type=int, default=200)
-# parser.add_argument('--height', type=int, default=31)
-# parser.add_argument('--model', type=str, default='CRNN_STN', choices=['CRNN_STN', 'CRNN'])
-# parser.add_argument('--conv_filter_size', type=int, nargs=7, default=[64, 128, 256, 256, 512, 512, 512])
-# parser.add_argument('--lstm_nb_units', type=int, nargs=2, default=[128, 128])
-# parser.add_argument('--timesteps', type=int, default=50)
-# parser.add_argument('--dropout_rate', type=float, default=0.25)
-# cfg = parser.parse_args()
+import gc
 
 def set_gpus():
     os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.gpus)[1:-1]
-
-def create_output_directory():
-    os.makedirs('eval', exist_ok=True)
-    output_subdir = create_result_subdir('eval')
-    print('Output directory: ' + output_subdir)
-    return output_subdir
 
 def collect_data():
     if os.path.isfile(cfg.data_path):
@@ -77,59 +53,30 @@ def predict_text(model, img):
     result_str = result_str.replace('-', '')
     return result_str
 
-def evaluate(model, data, output_subdir):
+def evaluate(model, data):
     if len(data) == 1:
         result = evaluate_one(model, data)
         return result
-    else:
-        result = evaluate_batch(model, data, output_subdir)
-        return result
 
 def evaluate_one(model, data):
-    print("In predict")
     img = load_image(data[0])
     img = preprocess_image(img)
-    print("Precessing")
     result = predict_text(model, img)
     print('Detected result: {}'.format(result))
     return result
-
-def evaluate_batch(model, data, output_subdir):
-    for filepath in tqdm(data):        
-        img = load_image(filepath)
-        img = preprocess_image(img)
-        result = predict_text(model, img)
-        output_file = os.path.basename(filepath)
-        output_file = output_file[:-4] + '.txt'
-        with open(os.path.join(output_subdir, output_file), 'w') as f:
-            f.write(result)
-
-        return result
 
 def ocr_event_trigger(arg):
     """Function to setup and apply the neural network"""
     global cfg
     cfg = arg
-    # print(cfg.data_path)
     set_gpus()
-
-    output_subdir = create_output_directory()
-
-    data = collect_data()
 
     _, model = CRNN_STN(cfg)
     model.load_weights(cfg.model_path)
-    result = evaluate(model, data, output_subdir)
 
-    # print("\n\n--------------- API RESULT ---------------\n")
-    # print(result)
-    # print("\n-------------------------------------------\n\n")
+    return model
+    
+def evaluate_string(model, file_path):
+    data = [file_path] # return file list
+    result = evaluate(model, data)
     return result
-
-# if __name__ == '__main__':
-#     set_gpus()
-#     output_subdir = create_output_directory()
-#     data = collect_data()
-#     _, model = CRNN_STN(cfg)    
-#     model.load_weights(cfg.model_path)
-#     _ = evaluate(model, data, output_subdir)

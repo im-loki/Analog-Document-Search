@@ -6,7 +6,6 @@ from keras.optimizers import Adam, SGD
 from keras.callbacks import ReduceLROnPlateau, TensorBoard
 from keras.utils import multi_gpu_model
 import keras.backend as K
-
 from models import CRNN_STN, CRNN
 from data_generator import TrainGenerator, ValGenerator
 from utils import MultiGPUModelCheckpoint, PredictionModelCheckpoint, Evaluator, create_result_subdir
