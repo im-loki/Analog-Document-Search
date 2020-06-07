@@ -1,7 +1,10 @@
-from keras.layers.core import Layer
 import tensorflow as tf
+import tensorflow 
 
-from keras.models import Sequential
+from tensorflow import keras
+from tensorflow.python.keras.layers import Layer
+
+from tensorflow.keras.models import Sequential
 
 class SpatialTransformer(Layer):
     """Spatial Transformer Layer
@@ -33,7 +36,7 @@ class SpatialTransformer(Layer):
 
     def build(self, input_shape):
         self.locnet.build(input_shape)
-        self.trainable_weights = self.locnet.trainable_weights
+        self.trainable_weights.append(self.locnet.trainable_weights)
         # self.constraints = self.locnet.constraints
 
     def get_config(self):

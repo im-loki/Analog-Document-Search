@@ -1,8 +1,8 @@
 import numpy as np
-from keras.layers import Input, Conv2D, BatchNormalization, MaxPooling2D, Reshape, Dense, LSTM, add, concatenate, Dropout, Lambda, Flatten
-from keras.models import Model
-import keras.backend as K
-
+import tensorflow as tf
+from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, MaxPooling2D, Reshape, Dense, LSTM, add, concatenate, Dropout, Lambda, Flatten
+from tensorflow.keras.models import Model
+from tensorflow.python.keras import backend as K
 from crnn.STN.spatial_transformer import SpatialTransformer
 
 
@@ -54,7 +54,7 @@ def CRNN_STN(cfg):
     bn_7 = BatchNormalization(name='bn_7')(c_7)
 
     bn_7_shape = bn_7.get_shape()
-    loc_input_shape = (bn_7_shape[1].value, bn_7_shape[2].value, bn_7_shape[3].value)
+    loc_input_shape = (bn_7_shape.as_list()[1], bn_7_shape.as_list()[2], bn_7_shape.as_list()[3])
     stn = SpatialTransformer(localization_net=loc_net(loc_input_shape), output_size=(loc_input_shape[0], loc_input_shape[1]))(bn_7)
 
     reshape = Reshape(target_shape=(int(bn_7_shape[1]), int(bn_7_shape[2] * bn_7_shape[3])), name='reshape')(stn)

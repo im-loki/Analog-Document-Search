@@ -7,4 +7,4 @@ requests==2.21.0
 stanfordcorenlp==3.9.1.1
 stemming==1.0.1
 urllib3==1.24.3
-mecab-python3==0.7
+

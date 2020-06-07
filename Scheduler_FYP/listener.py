@@ -1,19 +1,12 @@
 import pyrebase
 import re
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from crnn import t01
 from Dictionary_FYP import dict_using_spellchecker
 from Keyphrase_FYP import test
-
-# from crnn.eval import ocr_event_trigger
-
-# from crnn.utils import pad_image, resize_image, create_result_subdir
-# from crnn.STN.spatial_transformer import SpatialTransformer
-
 import urllib.request
 import random
-
-# from crnn.models import CRNN, CRNN_STN
-
 
 config = {
   "apiKey": " AIzaSyB5OEATcLYrle-7-Q3JX2Sai7jp5ja0T5o ",
@@ -22,9 +15,12 @@ config = {
   "storageBucket": "fyp01-8d888.appspot.com",
   "serviceAccount": "./fyp_key.json"
 }
+os.system('clear')
 
 firebase = pyrebase.initialize_app(config)
 print(firebase)
+
+# t01.segment_process("crnn/Images/final.png")
 
 db = firebase.database()
 com_path = "Requests/Active"
@@ -57,10 +53,6 @@ def some_rnd_func(path, data, key = ''):
 	f_s = test.new(c_s)
 
 	data['keypharses'] = str(f_s) # can directly use list within it as well instead
-
-	#call fyp_modules
-
-	#commit the returned data using the path + key explicitly. Do not change service variable.
 
 	print("----------------------------------------------------------Completed: some rnd func ")
 	return data
