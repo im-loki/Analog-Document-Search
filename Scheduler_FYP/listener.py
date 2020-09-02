@@ -1,12 +1,12 @@
 import pyrebase
 import re
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from crnn import t01
 from Dictionary_FYP import dict_using_spellchecker
 from Keyphrase_FYP import test
-
 import urllib.request
 import random
-
 
 config = {
   "apiKey": " AIzaSyB5OEATcLYrle-7-Q3JX2Sai7jp5ja0T5o ",
@@ -15,15 +15,22 @@ config = {
   "storageBucket": "fyp01-8d888.appspot.com",
   "serviceAccount": "./fyp_key.json"
 }
+os.system('clear')
 
 firebase = pyrebase.initialize_app(config)
 print(firebase)
 
+# t01.segment_process("crnn/Images/final.png")
+
 db = firebase.database()
 com_path = "Requests/Active"
 
+iter_db_hits = 0
+iter_proc_starts = 0
 def some_rnd_func(path, data, key = ''):
-	print("----------------------------------------------------------Starting Some rnd func")
+	global iter_proc_starts
+	iter_proc_starts += 1
+	print("----------------------------------------------------------Starting Some rnd func: ", str(iter_proc_starts))
 	print("#################### Data Received ####################")
 	print("Path: ", path)
 	print("key: ", key)
@@ -47,17 +54,15 @@ def some_rnd_func(path, data, key = ''):
 
 	data['keypharses'] = str(f_s) # can directly use list within it as well instead
 
-	#call fyp_modules
-
-	#commit the returned data using the path + key explicitly. Do not change service variable.
-
 	print("----------------------------------------------------------Completed: some rnd func ")
 	return data
 
 
 def stream_handler(post):
 	# print(post)
-
+	global iter_db_hits
+	iter_db_hits += 1
+	print(str(iter_db_hits))
 	#Initial Iterator through the whole Matching JSON. Pending Operations are done first.
 	if(post['path']=='/'):
 		data = post['data']

@@ -1,9 +1,9 @@
 import os, glob
 import numpy as np
 import cv2
-
-from keras.callbacks import ModelCheckpoint, Callback
-import keras.backend as K
+import tensorflow as tf
+from tensorflow.keras.callbacks import ModelCheckpoint, Callback
+from tensorflow.python.keras import backend as K
 
 
 def create_result_subdir(result_dir):
@@ -180,7 +180,7 @@ class Evaluator(Callback):
 def pad_image(img, img_size, nb_channels):
     # img_size : (width, height)
     # loaded_img_shape : (height, width)
-    print(img_size)
+    # print(img_size)
     img_reshape = cv2.resize(img, (int(img_size[1] / img.shape[0] * img.shape[1]), img_size[1]))
     if nb_channels == 1:
         padding = np.zeros((img_size[1], img_size[0] - int(img_size[1] / img.shape[0] * img.shape[1])), dtype=np.int32)
