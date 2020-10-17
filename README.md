@@ -1,4 +1,7 @@
 # Final Year Project
+## VTU Final Year CSE
+### MIT-TechPro Competition Winner - 2020
+### This project uses publically available repo and codes. We hereby, credit all the original owners of the various parts of system. 
 
 This is main page of our REPO.
 
